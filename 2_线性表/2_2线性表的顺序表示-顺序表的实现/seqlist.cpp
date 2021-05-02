@@ -88,6 +88,45 @@ void PrintList(SeqList L) {
 	printf("\n");
 }
 
+// 题目开始
+// 1. 解答
+//ElemType DeleteListMinData(SeqList& L) {
+//	if (L.length == 0) {
+//		printf("顺序表为空");
+//	}
+//	ElemType min = L.data[0];
+//	int j;
+//	for (int i = 1; i < L.length; i++) {
+//		if (min > L.data[i]) {
+//			min = L.data[i];
+//			j = i + 1;	// 记录最小值所在的位置
+//		}
+//	}
+//	ListDelete(L, j, min);
+//	ListInsert(L, j, L.data[L.length - 1]);
+//	return min;
+//}
+
+
+
+bool Del_Min(SeqList& L, ElemType& min) {
+	if (L.length == 0) {
+		return false;
+	}
+	min = L.data[0];		// 假设0号元素的值最小
+	int position = 0;		// 记录最小值位置
+	for (int i = 1; i < L.length; i++) {
+		if (L.data[i] < min) {
+			min = L.data[i];
+			position = i;
+		}
+	}
+	L.data[position] = L.data[L.length - 1];
+	L.length--;
+	return true;
+}
+
+// 2. 解答
 // 原位置进行逆置-方法1
 void InvertListWithOnePoint(SeqList& L) {
 	for (int i = 0; i < L.length / 2; i++) {
@@ -118,8 +157,226 @@ void InvertListWithTwoPoint(SeqList& L) {
 	//}
 }
 
+void Reverse(SeqList& L) {
+	ElemType temp;				// 辅助变量
+	for (int i = 0; i < L.length / 2; i++) {
+		temp = L.data[i];		// 头尾往中间靠，进行交换
+		L.data[i] = L.data[L.length - i - 1];
+		L.data[L.length - i - 1] = temp;
+	}
+}
 
-void test() {
+// 3.解答
+bool DeleteListValueWithAllSame(SeqList& L, ElemType e) {
+	if (L.length == 0) return false;
+	int k = 0;
+	int i = 0;
+	for (i = 0; i < L.length; i++) {
+		if (L.data[i] == e) {
+			k++;
+		}
+		else {
+			L.data[i - k] = L.data[i];
+		}
+	}
+	L.length = L.length - k;
+	return true;
+}
+
+// 用k记录顺序表中不等于x的元素个数（即需要保存的元素个数），边扫描L边统计k，并将不等于x的元素向前移动k个位置，最后修改L的长度
+void del_x_1(SeqList& L, ElemType x) {
+	int k = 0;							// k记录 值不等于 x 的元素个数
+	for (int i = 0; i < L.length; i++) {
+		if (L.data[i] != x) {
+			L.data[k] = L.data[i];
+			k++;						// 不等于 x 的元素个数加1
+		}
+	}
+	L.length = k;
+}
+
+// 用k记录顺序表L中等于x的元素个数，边扫描L边统计k，并将不等于x的元素前移k个位置，最后修改L的长度
+void del_x_2(SeqList& L, ElemType x) {
+	int k = 0, i = 0;					// k记录 值等于 x 的元素个数
+	while (i < L.length) {
+		if (L.data[i] == x) {
+			k++;
+		}
+		else {
+			L.data[i - k] = L.data[i];	// 当前元素前移k个位置
+		}
+		i++;
+	}
+	L.length = L.length - k;
+}
+
+// 4.解答
+
+bool DeleteValueBetweenST(SeqList& L, int s, int t) {
+	if (s >= t) {
+		printf("s大于等于t，不合理\n");
+		return false;
+	}
+	if (L.length == 0) {
+		printf("顺序表为空\n");
+		return false;
+	}
+	if (t < L.data[0] || s > L.data[L.length - 1]) {
+		return true;
+	}
+	if (s < L.data[0] && t > L.data[L.length - 1]) {
+		L.length = 0;
+		return true;
+	}
+	int k = 0;
+	for (int position = 0; position < L.length; position++) {
+		if (L.data[position] > s && L.data[position] < t) {
+			k++;
+		}
+		else {
+			L.data[position - k] = L.data[position];
+		}
+	}
+	L.length = L.length - k;
+	return true;
+}
+
+// 5. 解答
+bool DeleteValueBetweenST2(SeqList& L, int s, int t) {
+	if (s >= t) {
+		printf("s大于等于t，不合理\n");
+		return false;
+	}
+	if (L.length == 0) {
+		printf("顺序表为空\n");
+		return false;
+	}
+	int k = 0;
+	for (int position = 0; position < L.length; position++) {
+		if (L.data[position] > s && L.data[position] < t) {
+			k++;
+		}
+		else {
+			L.data[position - k] = L.data[position];
+		}
+	}
+	L.length = L.length - k;
+	return true;
+}
+
+// 6. 解答
+//bool DeleteAllDuplicate(SeqList& L) {
+//	int all_need_to_delete = 0;
+//	for (int i = 0; i < L.length; i++) {
+//		int count = 0;
+//		for (int j = i + 1; j < L.length; j++) {
+//			if (L.data[i] == L.data[j]) {
+//				count++;
+//			}
+//			else {
+//				
+//			}
+//		}
+//		if (count > 0) {
+//			all_need_to_delete += count;
+//		}
+//	}
+//}
+
+//void test() {
+//	SeqList L;
+//	InitList(L);
+//	ElemType e;
+//
+//	PrintList(L);
+//
+//	for (int i = 10; i > 0; i--) {
+//		e = i;
+//		InsertFront(L, e);
+//	}
+//
+//	PrintList(L);
+//
+//	//e = 11;
+//	//InsertBack(L, e);
+//
+//	PrintList(L);
+//
+//	InvertListWithOnePoint(L);
+//
+//	PrintList(L);
+//
+//	InvertListWithTwoPoint(L);
+//
+//	PrintList(L);
+//}
+
+//void test1() {
+//	SeqList L;
+//	InitList(L);
+//	ElemType e;
+//
+//	PrintList(L);
+//
+//	for (int i = 10; i > 0; i--) {
+//		e = i;
+//		InsertFront(L, e);
+//	}
+//
+//	PrintList(L);
+//
+//	ElemType min = 0;
+//	Del_Min(L, min);
+//
+//	PrintList(L);
+//}
+
+//void test3() {
+//	SeqList L;
+//	InitList(L);
+//	ElemType e;
+//
+//	PrintList(L);
+//
+//	for (int i = 10; i > 0; i--) {
+//		e = i;
+//		InsertFront(L, e);
+//	}
+//
+//	e = 10;
+//	InsertFront(L, e);
+//
+//	PrintList(L);
+//
+//	DeleteListValueWithAllSame(L, e);
+//
+//	PrintList(L);
+//}
+
+//void test4() {
+//	SeqList L;
+//	InitList(L);
+//	ElemType e;
+//
+//	PrintList(L);
+//
+//	for (int i = 10; i > 0; i--) {
+//		e = i;
+//		InsertFront(L, e);
+//	}
+//
+//
+//	PrintList(L);
+//
+//	//DeleteValueBetweenST(L, 2,5);
+//	//DeleteValueBetweenST(L, 5,15);
+//	DeleteValueBetweenST(L, -1,15);
+//	//DeleteValueBetweenST(L, -1,5);
+//
+//	PrintList(L);
+//}
+
+void test5() {
 	SeqList L;
 	InitList(L);
 	ElemType e;
@@ -131,26 +388,34 @@ void test() {
 		InsertFront(L, e);
 	}
 
-	PrintList(L);
-
-	//e = 11;
-	//InsertBack(L, e);
-
-	PrintList(L);
-
-	InvertListWithOnePoint(L);
+	e = 23;
+	InsertFront(L, e);
+	e = 25;
+	InsertFront(L, e);
+	e = 22;
+	InsertFront(L, e);
 
 	PrintList(L);
 
-	InvertListWithTwoPoint(L);
+	//DeleteValueBetweenST(L, 2,5);
+	//DeleteValueBetweenST(L, 5,15);
+	//DeleteValueBetweenST2(L, -1, 15);
+	DeleteValueBetweenST2(L, 5, 23);
+	//DeleteValueBetweenST(L, -1,5);
 
 	PrintList(L);
 }
 
 int main() 
 {
-	test();
+	//test();
+	//test1();
+	//test3();
+	//test4();
+	test5();
 	return 0;
 }
+
+
 
 
