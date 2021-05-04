@@ -266,22 +266,141 @@ bool DeleteValueBetweenST2(SeqList& L, int s, int t) {
 
 // 6. 解答
 //bool DeleteAllDuplicate(SeqList& L) {
-//	int all_need_to_delete = 0;
-//	for (int i = 0; i < L.length; i++) {
-//		int count = 0;
-//		for (int j = i + 1; j < L.length; j++) {
-//			if (L.data[i] == L.data[j]) {
-//				count++;
+//	if (L.length == 0) {
+//		return false;
+//	}
+//	int k = 0;	// 统计相同个数
+//	int i = 0;	// 记录需要替换的位置
+//	for (int j = 1; j < L.length; j++) {
+//		if (L.data[j - 1] == L.data[j]) {
+//			k++;
+//		}
+//		else {
+//			if(L.data[j] == L.data[j + 1])
+//			if (k == 0) {
+//				i++;
 //			}
 //			else {
-//				
+//				L.data[i] = L.data[j];
+//				i++;
 //			}
 //		}
-//		if (count > 0) {
-//			all_need_to_delete += count;
-//		}
 //	}
+//	L.length = i;
+//	return true;
 //}
+
+bool DeleteS(SeqList& L) {
+	if (L.length == 0) {
+		return false;
+	}
+
+	int k = 0;
+	for (int i = 1; i < L.length; i++) {
+		if (L.data[i] == L.data[i - 1]) {
+			k++;
+		}
+		else {
+			L.data[i - k] = L.data[i];
+		}
+	}
+	L.length = L.length - k;
+	return true;
+}
+
+bool Delete_Same(SeqList& L) {
+	if (L.length == 0) {
+		return false;
+	}
+
+	int i, j;
+	for (i = 0, j = 1; j < L.length; j++) {
+		if (L.data[i] != L.data[j]) {
+			L.data[++i] = L.data[j];
+		}
+	}
+	L.length = i + 1;
+	return true;
+}
+
+// 7. 解答
+bool MergeNewList(SeqList& L1, SeqList& L2, SeqList& L3) {
+	if ((L1.length + L2.length) > MAXSIZE) return false;
+
+	int i = 0, j = 0, k = 0;
+	// 
+	while ((i < L1.length) && (j < L2.length)) {
+		if (L1.data[i] < L2.data[j]) {
+			L3.data[k] = L1.data[i];
+			i++;
+			k++;
+		}
+		else if (L1.data[i] > L2.data[j]) {
+			L3.data[k] = L2.data[j];
+			j++;
+			k++;
+		}
+	}
+
+	while (i < L1.length) {
+		L3.data[k] = L1.data[i];
+		i++;
+		k++;
+	}
+
+	while (j < L2.length) {
+		L3.data[k] = L2.data[j];
+		j++;
+		k++;
+	}
+
+	L3.length = k;
+	
+	return true;
+}
+
+bool Merge(SeqList A, SeqList B, SeqList& C) {
+	if (A.length + B.length > MAXSIZE) return false;
+
+	int i = 0, j = 0, k = 0;
+	while (i < A.length && j < B.length) {
+		if (A.data[i] <= B.data[j])
+			C.data[k++] = A.data[i++];
+		else
+			C.data[k++] = B.data[j++];
+	}
+	while (i < A.length)
+		C.data[k++] = A.data[i++];
+	while (j < B.length)
+		C.data[k++] = B.data[j++];
+	C.length = k;
+	return true;
+}
+
+// 8. 解答
+//bool Reverse2List(SeqList& L1, SeqList& L2) {}
+
+void Reverse(ElemType A[], int left, int right, int arraySize) {
+	// 逆转(aleft, aleft + 1, ..., aright)为(aright, arigth - 1, ..., aleft)
+	if (left >= right || right >= arraySize) return;
+
+	int mid = (left + right) / 2;
+	for (int i = 0; i <= mid - left; i++) {
+		ElemType temp = A[left + i];
+		A[left + i] = A[right - i];
+		A[right - i] = temp;
+	}
+}
+
+void Exchange(ElemType A[], int m, int n, int arraySize) {
+	// 数组A[m+n]中，从0到m-1存放顺序表(a1,a2,...,am)，从m到m+n-1存放顺序表(b1,...,bn)
+	// 算法将这两个表位置互换
+	Reverse(A, 0, m + n - 1, arraySize);
+	Reverse(A, 0, n - 1, arraySize);
+	Reverse(A, n, m + n - 1, arraySize);
+}
+
+
 
 //void test() {
 //	SeqList L;
@@ -376,34 +495,83 @@ bool DeleteValueBetweenST2(SeqList& L, int s, int t) {
 //	PrintList(L);
 //}
 
-void test5() {
-	SeqList L;
-	InitList(L);
-	ElemType e;
+//void test5() {
+//	SeqList L;
+//	InitList(L);
+//	ElemType e;
+//
+//	PrintList(L);
+//
+//	for (int i = 10; i > 0; i--) {
+//		e = i;
+//		InsertFront(L, e);
+//	}
+//
+//	e = 23;
+//	InsertFront(L, e);
+//	e = 25;
+//	InsertFront(L, e);
+//	e = 22;
+//	InsertFront(L, e);
+//
+//	PrintList(L);
+//
+//	//DeleteValueBetweenST(L, 2,5);
+//	//DeleteValueBetweenST(L, 5,15);
+//	//DeleteValueBetweenST2(L, -1, 15);
+//	DeleteValueBetweenST2(L, 5, 23);
+//	//DeleteValueBetweenST(L, -1,5);
+//
+//	PrintList(L);
+//}
 
-	PrintList(L);
+//void test6() {
+//	SeqList L;
+//	InitList(L);
+//	ElemType e;
+//
+//	PrintList(L);
+//
+//	for (int i = 10; i > 0; i--) {
+//		scanf("%d", &e);
+//		InsertBack(L, e);
+//	}
+//
+//	PrintList(L);
+//
+//	//DeleteAllDuplicate(L);
+//	DeleteS(L);
+//
+//	PrintList(L);
+//}
 
-	for (int i = 10; i > 0; i--) {
-		e = i;
-		InsertFront(L, e);
+void test7() {
+	SeqList L1;
+	SeqList L2;
+	SeqList L3;
+	InitList(L1);
+	InitList(L2);
+	InitList(L3);
+	ElemType e1;
+	ElemType e2;
+
+	for (int i = 10; i > 0; i-=2) {
+		e1 = i;
+		InsertFront(L1, e1);
+	}
+	
+	PrintList(L1);
+
+	for (int j = 9; j > 0; j-=2) {
+		e2 = j;
+		InsertFront(L2, e2);
 	}
 
-	e = 23;
-	InsertFront(L, e);
-	e = 25;
-	InsertFront(L, e);
-	e = 22;
-	InsertFront(L, e);
+	PrintList(L2);
 
-	PrintList(L);
+	MergeNewList(L1, L2, L3);
 
-	//DeleteValueBetweenST(L, 2,5);
-	//DeleteValueBetweenST(L, 5,15);
-	//DeleteValueBetweenST2(L, -1, 15);
-	DeleteValueBetweenST2(L, 5, 23);
-	//DeleteValueBetweenST(L, -1,5);
-
-	PrintList(L);
+	PrintList(L3);
 }
 
 int main() 
@@ -412,7 +580,9 @@ int main()
 	//test1();
 	//test3();
 	//test4();
-	test5();
+	//test5();
+	//test6();
+	test7();
 	return 0;
 }
 
