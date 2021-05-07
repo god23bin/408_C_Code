@@ -228,13 +228,16 @@ int ListLength(LinkList& L) {
 
 // 头插法建立单链表
 LinkList ListHeadInsert(LinkList& L) {
+	
 	LNode* s;
 	int x;
 	L = (LinkList)malloc(sizeof(LNode));	// 创建头结点
+	if (L == NULL) return L;
 	L->next = NULL;							// 初始化为空链表
 	scanf("%d", &x);						// 输入结点的值
 	while (x != 9999) {
 		s = (LNode*)malloc(sizeof(LNode));	// 创建新结点
+		if (s == NULL) return L;
 		s->data = x;
 		s->next = L->next;
 		L->next = s;
@@ -248,10 +251,12 @@ LinkList ListTailInsert(LinkList& L) {
 	// 设置表尾指针 r，直接在它后面进行后插操作
 	int x;
 	L = (LinkList)malloc(sizeof(LNode));	// 创建头结点
+	if (L == NULL) return L;
 	LNode* s, * r = L;
 	scanf("%d", &x);
 	while (x != 9999) {
 		s = (LNode*)malloc(sizeof(LNode));
+		if (s == NULL) return L;
 		s->data = x;
 		r->next = s;
 		r = s;
