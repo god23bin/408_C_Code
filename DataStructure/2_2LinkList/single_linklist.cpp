@@ -48,7 +48,7 @@ void PrintList(LinkList& L);
 
 // 初始化链表(带头结点)
 bool InitList(LinkList& L) {
-	L = (LNode*)malloc(sizeof(LNode));
+	L = (LinkList)malloc(sizeof(LNode));
 	if (L == NULL) return false;
 	L->next = NULL;
 	return true;
@@ -334,6 +334,36 @@ void Del_X_3(LinkList& L, ElemType x) {
 	else {						// 若L所指结点的值不为x
 		Del_X_3(L->next, x);	// 递归调用
 	}
+}
+
+// 2. 解答
+// 用p从头至尾扫描单链表，pre指向*p结点的前驱。若p所指向结点的值为x，则删除，并让p移向下一个结点
+// 否则让pre、p指针同步后移一个结点。
+void Del_X_1(LinkList& L, ElemType x) {
+	// L为带头结点的单链表
+	LNode* p = L->next, * pre = L, * q;	// 置p和pre的初始值
+	while (p != NULL) {
+		if (p->data == x) {
+			q = p;			// q 指向该结点
+			p = p->next;
+			pre->next = p;	// 删除 q 指向的结点
+			free(q);
+		}
+		else {
+			// p指向的结点的数据不为x，就进行移动，移到下一位
+			pre = p;
+			p = p->next;
+		}
+	}
+}
+
+// 3. 解答
+void R_Print(LinkList L) {
+	// 从尾到头输出单链表L中的每个结点的值
+	if (L->next != NULL) {
+		R_Print(L->next);		// 递归
+	}
+	if (L != NULL) printf("%d ", L->data);
 }
 
 int main() {
