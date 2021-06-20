@@ -16,6 +16,19 @@ typedef struct {				// 链式队列
 	// int length;				// 可以加多变量，记录长度
 }LinkQueue;
 
+// 队列基本操作 - 初始化/判空/入队/出队
+
+// 带头结点的基本操作
+void InitQueueWithHead(LinkQueue& Q);
+bool IsEmptyWithHead(LinkQueue Q);
+bool EnQueueWithHead(LinkQueue& Q, ElemType x);
+bool DeQueueWithHead(LinkQueue& Q, ElemType& x);
+
+// 不带头结点的基本操作
+void InitQueue(LinkQueue& Q);
+bool IsEmpty(LinkQueue Q);
+bool EnQueue(LinkQueue& Q, ElemType x);
+bool DeQueue(LinkQueue& Q, ElemType& x);
 
 // 带头结点
 void InitQueueWithHead(LinkQueue& Q) {
@@ -33,12 +46,14 @@ bool IsEmptyWithHead(LinkQueue Q) {
 }
 
 // 带头结点入队
-void EnQueueWithHead(LinkQueue& Q, ElemType x) {
+bool EnQueueWithHead(LinkQueue& Q, ElemType x) {
 	LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
+	if (s == NULL) return false;
 	s->data = x;
 	s->next = NULL;
 	Q.rear->next = s;	// 新结点插入到rear后面
 	Q.rear = s;			// 修改表尾指针指向新结点
+	return true;
 }
 
 // 带头结点出队
@@ -62,15 +77,17 @@ void InitQueue(LinkQueue& Q) {
 
 // 不带头结点判空
 bool IsEmpty(LinkQueue Q) {
-	if (Q.front == Q.rear == NULL)
+	//if (Q.front == Q.rear == NULL) 判空会失败
+	if (Q.front == Q.rear && Q.rear == NULL)
 		return true;
 	else
 		return false;
 }
 
 // 不带头结点入队
-void EnQueue(LinkQueue& Q, ElemType x) {
+bool EnQueue(LinkQueue& Q, ElemType x) {
 	LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
+	if (s == NULL) return false;
 	s->data = x;
 	s->next = NULL;
 	if (Q.front == NULL) {	// 在空队列中插入第一个元素
@@ -81,6 +98,7 @@ void EnQueue(LinkQueue& Q, ElemType x) {
 		Q.rear->next = s;	// 新结点插入到rear后面
 		Q.rear = s;			// rear指向新结点
 	}
+	return true;
 }
 
 // 不带头结点出队
