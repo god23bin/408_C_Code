@@ -366,6 +366,54 @@ void R_Print(LinkList L) {
 	if (L != NULL) printf("%d ", L->data);
 }
 
+// 4. ½â´ğ
+void Del_Min(LinkList& L) {
+	LNode* p, * pre, * minp, * minpre;
+	pre = L;
+	p = L->next;
+	minpre = L;
+	minp = L->next;
+	while (p != NULL) {
+		if ((p->data) < (minp->data)) {
+			minp = p;
+			minpre = pre;
+		}
+		else {
+			pre = p;
+			p = p->next;
+		}
+	}
+	minpre->next = minp->next;
+	free(minp);
+}
+
+// 
+LinkList Del_Min_1(LinkList& L) {
+	LNode* p, * pre, * minp, * minpre;
+	pre = L;
+	p = L->next;
+	minpre = L;
+	minp = L->next;
+	while (p != NULL) {
+		if ((p->data) < (minp->data)) {
+			minp = p;
+			minpre = pre;
+		}
+		else {
+			pre = p;
+			p = p->next;
+		}
+	}
+	minpre->next = minp->next;
+	free(minp);
+	return L;
+}
+
+// 5. ½â´ğ
+void ReverseLinkList(LinkList& L) {
+	
+}
+
 int main() {
 	test();
 	return 0;
