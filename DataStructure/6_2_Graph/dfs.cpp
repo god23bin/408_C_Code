@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAXTEX 30
+#define MaxVertexNum 30
 
 typedef int VertexType;
 typedef int EdgeType;
@@ -14,29 +14,29 @@ typedef int ElemType;
 
 // 邻接矩阵
 typedef struct Graph {
-	VertexType vertex[MAXTEX];
-	EdgeType edge[MAXTEX][MAXTEX];
+	VertexType vertex[MaxVertexNum];
+	EdgeType edge[MaxVertexNum][MaxVertexNum];
 	int vexnum, arcnum;
 }Graph;
 
 // 找图G中顶点x的第一个邻接点
-int FirstNeighbor(Graph& G, VertexType x);
+int FirstNeighbor(Graph G, VertexType x);
 
 // 找图G中顶点x的第一个邻接点的下一个邻接点
-int NextNeighbor(Graph& G, VertexType x, VertexType y);
+int NextNeighbor(Graph G, VertexType x, VertexType y);
 
 
-int GetSubscript(Graph& G, VertexType x) {
-	for (int i = 0; i < MAXTEX; i++) {
+int GetSubscript(Graph G, VertexType x) {
+	for (int i = 0; i < MaxVertexNum; i++) {
 		if (G.vertex[i] == x)
 			return i;
 	}
 }
 
 // 找图G中顶点x的第一个邻接点
-int FirstNeighbor(Graph& G, VertexType x) {
+int FirstNeighbor(Graph G, VertexType x) {
 	int i = GetSubscript(G, x);
-	for (int j = 0; j < MAXTEX; j++) {
+	for (int j = 0; j < MaxVertexNum; j++) {
 		if (G.edge[i][j])
 			return j;
 	}
@@ -44,11 +44,11 @@ int FirstNeighbor(Graph& G, VertexType x) {
 
 
 // 找图G中顶点x的第一个邻接点y的下一个邻接点
-int NextNeighbor(Graph& G, VertexType x, VertexType y) {
+int NextNeighbor(Graph G, VertexType x, VertexType y) {
 	int i = GetSubscript(G, x);
 	int j = GetSubscript(G, y);
 	j = j + 1;	// 从后一个位置开始遍历，重新找到第一次出现的1，几位下一个邻接点
-	for (j; j < MAXTEX; j++) {
+	for (j; j < MaxVertexNum; j++) {
 		if (G.edge[i][j])
 			return j;
 	}
@@ -58,7 +58,7 @@ void visit(VertexType v) {
 	printf("%d ", v);
 }
 
-bool visited[MAXTEX];
+bool visited[MaxVertexNum];
 
 void DFSTraverse(Graph G) {
 	for (int v = 0; v < G.vexnum; ++v)
