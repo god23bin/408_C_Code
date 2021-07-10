@@ -21,10 +21,10 @@ typedef struct Graph {
 
 
 // 找图G中顶点x的第一个邻接点
-int FirstNeighbor(Graph& G, VertexType x);
+int FirstNeighbor(Graph G, VertexType x);
 
 // 找图G中顶点x的第一个邻接点的下一个邻接点
-int NextNeighbor(Graph& G, VertexType x, VertexType y);
+int NextNeighbor(Graph G, VertexType x, VertexType y);
 
 
 
@@ -96,7 +96,7 @@ bool DeQueue(LinkQueue& Q, ElemType& x) {
 	return true;
 }
 
-int GetSubscript(Graph& G, VertexType x) {
+int GetSubscript(Graph G, VertexType x) {
 	for (int i = 0; i < MAXTEX; i++) {
 		if (G.vertex[i] == x)
 			return i;
@@ -104,7 +104,7 @@ int GetSubscript(Graph& G, VertexType x) {
 }
 
 // 找图G中顶点x的第一个邻接点
-int FirstNeighbor(Graph& G, VertexType x) {
+int FirstNeighbor(Graph G, VertexType x) {
 	int i = GetSubscript(G, x);
 	for (int j = 0; j < MAXTEX; j++) {
 		if (G.edge[i][j])
@@ -114,7 +114,7 @@ int FirstNeighbor(Graph& G, VertexType x) {
 
 
 // 找图G中顶点x的第一个邻接点y的下一个邻接点
-int NextNeighbor(Graph& G, VertexType x, VertexType y) {
+int NextNeighbor(Graph G, VertexType x, VertexType y) {
 	int i = GetSubscript(G, x);
 	int j = GetSubscript(G, y);
 	j = j + 1;	// 从后一个位置开始遍历，重新找到第一次出现的1，几位下一个邻接点

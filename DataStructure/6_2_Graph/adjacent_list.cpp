@@ -30,7 +30,7 @@ typedef struct {
 }ALGraph;
 
 
-int GetSubscript(ALGraph& G, VertexType x) {
+int GetSubscript(ALGraph G, VertexType x) {
 	for (int i = 0; i < MaxVertexNum; i++) {
 		if (G.vertices[i].data == x)
 			return i;
@@ -40,37 +40,37 @@ int GetSubscript(ALGraph& G, VertexType x) {
 // 基本操作
 
 // 判断图G是否存在边<x, y> 或(x, y)
-bool Adjacent(ALGraph& G, VertexType x, VertexType y);
+bool Adjacent(ALGraph G, VertexType x, VertexType y);
 
 // 列出图G中与结点x邻接的边
-void Neighbors(ALGraph& G, VertexType x);
+void Neighbors(ALGraph G, VertexType x);
 
 // 插入新结点
-bool InsertVertex(ALGraph& G, VertexType x);
+bool InsertVertex(ALGraph G, VertexType x);
 
 // 删除顶点
-bool DeleteVertex(ALGraph& G, VertexType x);
+bool DeleteVertex(ALGraph G, VertexType x);
 
 // 增加一条边
-bool AddEdge(ALGraph& G, VertexType x, VertexType y);
+bool AddEdge(ALGraph G, VertexType x, VertexType y);
 
 // 删除一条边，若无向边(x, y)或有向边<x, y>存在，则从图G中删除该边
-bool RemoveEdge(ALGraph& G, VertexType x, VertexType y);
+bool RemoveEdge(ALGraph G, VertexType x, VertexType y);
 
 // 找图G中顶点x的第一个邻接点
-int FirstNeighbor(ALGraph& G, VertexType x);
+int FirstNeighbor(ALGraph G, VertexType x);
 
 // 找图G中顶点x的第一个邻接点的下一个邻接点
-int NextNeighbor(ALGraph& G, VertexType x, VertexType y);
+int NextNeighbor(ALGraph G, VertexType x, VertexType y);
 
 //// 获取权值
-//int GetEdgeValue(ALGraph& G, x, y);
+//int GetEdgeValue(ALGraph G, x, y);
 //
 //// 设置权值
-//bool SetEdgeValue(ALGraph& G, x, y, v);
+//bool SetEdgeValue(ALGraph G, x, y, v);
 
 // 判断图G是否存在边<x, y> 或(x, y)
-bool Adjacent(ALGraph& G, VertexType x, VertexType y) {
+bool Adjacent(ALGraph G, VertexType x, VertexType y) {
 	int i = GetSubscript(G, x);
 	int j = GetSubscript(G, y);
 	// p指向数组1位置上的first这个头结点
@@ -88,7 +88,7 @@ bool Adjacent(ALGraph& G, VertexType x, VertexType y) {
 }
 
 // 列出图G中与结点x邻接的边
-void Neighbors(ALGraph& G, VertexType x) {
+void Neighbors(ALGraph G, VertexType x) {
 	int i = GetSubscript(G, x);
 	int j = 0;
 	ArcNode* p = G.vertices[i].first;
@@ -101,14 +101,14 @@ void Neighbors(ALGraph& G, VertexType x) {
 
 
 // 插入新结点
-bool InsertVertex(ALGraph& G, VertexType x) {
+bool InsertVertex(ALGraph G, VertexType x) {
 	G.vertices[G.vexnum].data = x;
 	G.vertices[G.vexnum].first = NULL;
 }
 
 
 // 删除顶点
-bool DeleteVertex(ALGraph& G, VertexType x) {
+bool DeleteVertex(ALGraph G, VertexType x) {
 	int i = GetSubscript(G, x);
 	// 设置为字符0，表示该位置为空
 	G.vertices[i].data = '0';
@@ -149,7 +149,7 @@ bool DeleteVertex(ALGraph& G, VertexType x) {
 
 
 // 增加边结点，在G中下标为i的位置的链表上添加adjvex为j的结点
-bool AddArcNode(ALGraph& G, int i, int j) {
+bool AddArcNode(ALGraph G, int i, int j) {
 	ArcNode* p = G.vertices[i].first;
 	while (p->next) {
 		p = p->next;
@@ -164,7 +164,7 @@ bool AddArcNode(ALGraph& G, int i, int j) {
 }
 
 // 增加一条边
-bool AddEdge(ALGraph& G, VertexType x, VertexType y) {
+bool AddEdge(ALGraph G, VertexType x, VertexType y) {
 	int i = GetSubscript(G, x);
 	int j = GetSubscript(G, y);
 	//AddArcNode(G, i, j);
@@ -177,7 +177,7 @@ bool AddEdge(ALGraph& G, VertexType x, VertexType y) {
 }
 
 // 找图G中顶点x的第一个邻接点
-int FirstNeighbor(ALGraph& G, VertexType x) {
+int FirstNeighbor(ALGraph G, VertexType x) {
 	int i = GetSubscript(G, x);
 	ArcNode* p = G.vertices[i].first;
 	if (p->next) {
@@ -190,7 +190,7 @@ int FirstNeighbor(ALGraph& G, VertexType x) {
 
 
 // 找图G中顶点x的第一个邻接点y的下一个邻接点
-int NextNeighbor(ALGraph& G, VertexType x, VertexType y) {
+int NextNeighbor(ALGraph G, VertexType x, VertexType y) {
 	int i = GetSubscript(G, x);
 	int j = GetSubscript(G, y);
 	ArcNode* p = G.vertices[i].first;

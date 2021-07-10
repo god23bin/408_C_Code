@@ -29,7 +29,7 @@ typedef struct {
 
 
 
-int GetSubscript(MGraph& G, VertexType x) {
+int GetSubscript(MGraph G, VertexType x) {
 	for (int i = 0; i < MaxVertexNum; i++) {
 		if (G.vex[i] == x)
 			return i;
@@ -39,38 +39,38 @@ int GetSubscript(MGraph& G, VertexType x) {
 // 基本操作
 
 // 判断图G是否存在边<x, y> 或(x, y)
-bool Adjacent(MGraph& G, VertexType x, VertexType y);
+bool Adjacent(MGraph G, VertexType x, VertexType y);
 
 // 列出图G中与结点x邻接的边
-void Neighbors(MGraph& G, VertexType x);
+void Neighbors(MGraph G, VertexType x);
 
 // 插入新结点
-bool InsertVertex(MGraph& G, VertexType x);
+bool InsertVertex(MGraph G, VertexType x);
 
 // 删除顶点
-bool DeleteVertex(MGraph& G, VertexType x);
+bool DeleteVertex(MGraph G, VertexType x);
 
 // 增加一条边
-bool AddEdge(MGraph& G, VertexType x, VertexType y);
+bool AddEdge(MGraph G, VertexType x, VertexType y);
 
 // 删除一条边，若无向边(x, y)或有向边<x, y>存在，则从图G中删除该边
-bool RemoveEdge(MGraph& G, VertexType x, VertexType y);
+bool RemoveEdge(MGraph G, VertexType x, VertexType y);
 
 // 找图G中顶点x的第一个邻接点
-int FirstNeighbor(MGraph& G, VertexType x);
+int FirstNeighbor(MGraph G, VertexType x);
 
 // 找图G中顶点x的第一个邻接点的下一个邻接点
-int NextNeighbor(MGraph& G, VertexType x, VertexType y);
+int NextNeighbor(MGraph G, VertexType x, VertexType y);
 
 //// 获取权值
-//int GetEdgeValue(MGraph& G, x, y);
+//int GetEdgeValue(MGraph G, x, y);
 //
 //// 设置权值
-//bool SetEdgeValue(MGraph& G, x, y, v);
+//bool SetEdgeValue(MGraph G, x, y, v);
 
 
 // 判断图G是否存在边<x, y> 或(x, y)
-bool Adjacent(MGraph& G, VertexType x, VertexType y) {
+bool Adjacent(MGraph G, VertexType x, VertexType y) {
 	int i = GetSubscript(G, x);
 	int j = GetSubscript(G, y);
 	if (G.edge[i][j])
@@ -81,7 +81,7 @@ bool Adjacent(MGraph& G, VertexType x, VertexType y) {
 
 
 // 列出图G中与结点x邻接的边
-void Neighbors(MGraph& G, VertexType x) {
+void Neighbors(MGraph G, VertexType x) {
 	int i = GetSubscript(G, x);
 	// arr 记录邻接矩阵中为1的下标
 	//int arr[MaxVertexNum] = { 0 };
@@ -99,14 +99,14 @@ void Neighbors(MGraph& G, VertexType x) {
 
 
 // 插入新结点
-bool InsertVertex(MGraph& G, VertexType x) {
+bool InsertVertex(MGraph G, VertexType x) {
 	G.vex[G.vexnum] = x;
 	return true;
 }
 
 
 // 删除顶点
-bool DeleteVertex(MGraph& G, VertexType x) {
+bool DeleteVertex(MGraph G, VertexType x) {
 	int i = GetSubscript(G, x);
 	for (int j = 0; j < MaxVertexNum; j++) {
 		// 设置行为0
@@ -122,7 +122,7 @@ bool DeleteVertex(MGraph& G, VertexType x) {
 
 
 // 增加一条边
-bool AddEdge(MGraph& G, VertexType x, VertexType y) {
+bool AddEdge(MGraph G, VertexType x, VertexType y) {
 	int i = GetSubscript(G, x);
 	int j = GetSubscript(G, y);
 	G.edge[i][j] = 1;
@@ -132,7 +132,7 @@ bool AddEdge(MGraph& G, VertexType x, VertexType y) {
 
 
 // 找图G中顶点x的第一个邻接点
-int FirstNeighbor(MGraph& G, VertexType x) {
+int FirstNeighbor(MGraph G, VertexType x) {
 	int i = GetSubscript(G, x);
 	for (int j = 0; j < MaxVertexNum; j++) {
 		if (G.edge[i][j])
@@ -142,7 +142,7 @@ int FirstNeighbor(MGraph& G, VertexType x) {
 
 
 // 找图G中顶点x的第一个邻接点y的下一个邻接点
-int NextNeighbor(MGraph& G, VertexType x, VertexType y) {
+int NextNeighbor(MGraph G, VertexType x, VertexType y) {
 	int i = GetSubscript(G, x);
 	int j = GetSubscript(G, y);
 	j = j + 1;	// 从后一个位置开始遍历，重新找到第一次出现的1，几位下一个邻接点
