@@ -27,3 +27,71 @@ int BinarySearch(SSTable L, ElemType key) {
 	}
 	return -1;
 }
+
+
+
+// 折半查找练习
+int BS1(SSTable L, int key) {
+	int low = 0, high = L.length, mid;
+	while (low <= high) {
+		mid = (low + high) / 2;
+		if (L.elem[mid] == key) {
+			return mid;
+		}
+		else if (L.elem[mid] > key) {
+			high = mid - 1;
+		}
+		else {
+			low = mid + 1;
+		}
+	}
+	return -1;
+}
+
+
+
+// 立马能写出来
+int BS1(SSTable L, int key) {
+	int low = 0, high = L.length, mid;
+	while (low <= high) {
+		mid = (low + high) / 2;
+		if (L.elem[mid] == key)
+			return mid;
+		else if (L.elem[mid] > key)
+			high = mid - 1;
+		else
+			low = mid + 1;
+	}
+	return -1;
+}
+
+
+int BS2(int arr[], int len, int key) {
+	int low = 0, high = len - 1, mid;
+	while (low <= high) {
+		mid = (low + high) / 2;
+		if (arr[mid] == key)
+			return mid;
+		else if (arr[mid] > key)
+			high = mid - 1;
+		else
+			low = mid + 1;
+	}
+	return -1;
+}
+
+
+int BS3(int arr[], int len, int key) {
+	int low = 0, high = len - 1, mid;
+	while (low < high) {
+		mid = (low + high) / 2;
+		if (arr[mid] == key)
+			return mid;
+		else if (arr[mid] > key) {
+			high = mid - 1;
+		}
+		else
+			low = mid + 1;
+	}
+	return -1;
+}
