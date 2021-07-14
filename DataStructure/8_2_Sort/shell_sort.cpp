@@ -19,3 +19,72 @@ void ShellSort(int A[], int n) {
 				A[j + d] = A[0];		// ≤Â»Î
 			}
 }
+// d 5
+// i 6					7
+// A[6] < A[1]			A[7] < A[2]
+// A[0] = A[6] = 13
+// j = 1
+
+// ¡∑œ∞
+void ShellSort1(int arr[], int n) {
+	int d, i, j, temp;
+	for (d = n / 2; d >= 1; d /= 2) {
+		for (i = d + 1; i < n; i++) {
+			if (arr[i] < arr[i - d]) {
+				temp = arr[i];
+				for (j = i - d; j > 0 && arr[j] > temp; j -= d) {
+					arr[j + d] = arr[j];
+				}
+				arr[j + d] = temp;
+			}
+		}
+	}
+}
+
+
+void ShellSort2(int arr[], int n) {
+	int d, i, j, temp;
+	for (d = d / 2; d >= 1; d = d / 2) {
+		for (i = d + 1; i < n; i++) {
+			if (arr[i] < arr[i - d]) {
+				temp = arr[i];
+				for (j = i - d; j > 0 && arr[j] > temp; j -= d) {
+					arr[j + 1] = arr[j];
+				}
+				arr[j + 1] = temp;
+			}
+		}
+	}
+}
+
+
+
+void ShellSort3(int arr[], int n) {
+	int d, i, j, temp;
+	for (d = d/2; d >= 1; d = d/2) {
+		for (i = d + 1; i < n; i++) {
+			if (arr[i] < arr[i - d]) {
+				arr[i] = temp;
+				for (j = i - d; j > 0 && arr[j] > temp; j = j - d) {
+					arr[j + d] = arr[j];
+				}
+				arr[j + d] = temp;
+			}
+		}
+	}
+}
+
+
+void ShellSort4(int arr[], int n) {
+	int d, i, j, temp;
+	for (d = d/2; d >= 1; d /= 2) {
+		for (i = d + 1; i < n; i++) {
+			if (arr[i] < arr[i - d]) {
+				for(j = i - d; j > 0 && arr[j] > temp; j -= d) {
+					arr[j + d] = arr[j];
+				}
+				arr[j + d] = temp;
+			}
+		}
+	}
+}
